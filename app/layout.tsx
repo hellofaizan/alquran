@@ -57,7 +57,7 @@ export default function RootLayout({
       GeistMono.variable
     )}>
       <body className=''>
-        <Image src={gradientImg} alt="background" className="absolute z-[-1] left-0 w-full h-1/2 md:h-2/3 object-cover" role="banner" priority />
+        <Image src={gradientImg} alt="background" className="absolute z-[-1] left-0 w-full h-1/2 md:h-2/3 object-cover" role="progressbar" priority />
         <div className='flex-auto min-w-0 flex flex-col md:px-0 container max-w-2xl mx-auto min-h-screen px-4 md:pt-16'>
           <div className='flex-1'>
             <Nav />
