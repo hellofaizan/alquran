@@ -52,7 +52,11 @@ export default function RootLayout({
       'text-white bg-[#111010]',
       GeistSans.variable,
       GeistMono.variable
-    )}>
+    )}
+    >
+      <head>
+        <link rel="icon" href="/public/assets/applogo_nobg.png" sizes="any" />
+      </head>
       <body className=''>
         {children}
         <Toaster />
