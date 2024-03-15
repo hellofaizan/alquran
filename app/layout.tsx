@@ -3,6 +3,9 @@ import type { Metadata } from 'next'
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
 import { Toaster } from "@/components/ui/sonner"
+import Nav from '@/components/navbar';
+import Image from 'next/image';
+import gradientImg from "@/public/topimg.png";
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://hellofaizan.tech'),
@@ -52,14 +55,16 @@ export default function RootLayout({
       'text-white bg-[#111010]',
       GeistSans.variable,
       GeistMono.variable
-    )}
-    >
-      <head>
-        <link rel="icon" href="/public/assets/applogo_nobg.png" sizes="any" />
-      </head>
+    )}>
       <body className=''>
-        {children}
-        <Toaster />
+        <Image src={gradientImg} alt="background" className="absolute z-[-1] left-0 w-full h-1/2 md:h-3/5 object-cover" role="presentation" priority />
+        <div className='flex-auto min-w-0 flex flex-col md:px-0 container max-w-2xl mx-auto min-h-screen px-4 md:pt-16'>
+          <div className='flex-1'>
+            <Nav />
+            {children}
+          </div>
+          <Toaster />
+        </div>
       </body>
     </html>
   )
