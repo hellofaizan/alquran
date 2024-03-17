@@ -1,13 +1,53 @@
-import React from "react";
+"use client"
+
+import React, { useState, useEffect } from "react";
 import { Heart, Menu } from "lucide-react";
 import Link from "next/link";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import appLogo from "@/public/assets/applogo-white.png";
+import { cn } from "@/lib/utils";
 
 const Nav = () => {
+    const [scrolling, setScrolling] = useState(false);
+    const [windowWidth, setWindowWidth] = useState(0); // Set initial width to 0
+
+    useEffect(() => {
+        // Check if window is defined before accessing window.innerWidth
+        if (typeof window !== 'undefined') {
+            setWindowWidth(window.innerWidth);
+        }
+
+        const handleScroll = () => {
+            const isScrolled = window.scrollY > 0;
+            setScrolling(isScrolled);
+        };
+
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        // Check if window is defined before adding event listeners
+        if (typeof window !== 'undefined') {
+            window.addEventListener("scroll", handleScroll);
+            window.addEventListener("resize", handleResize);
+        }
+
+        return () => {
+            // Check if window is defined before removing event listeners
+            if (typeof window !== 'undefined') {
+                window.removeEventListener("scroll", handleScroll);
+                window.removeEventListener("resize", handleResize);
+            }
+        };
+    }, []);
     return (
-        <div className="sticky top-0 backdrop-blur-lg w-full justify-center">
+        <div className={cn(
+            "sticky top-0 w-full justify-center px-4 z-10",
+            scrolling
+            ? "backdrop-blur-lg"
+            : "backdrop-blur-0"
+        )}>
             <div className="flex justify-between flex-row py-5">
                 {/* Menu and Logo */}
                 <div className="flex gap-2 items-center">
@@ -20,12 +60,12 @@ const Nav = () => {
                 {/* Icons End */}
                 <div className="flex items-center gap-1">
                     <Link href="">
-                        <GitHubLogoIcon className="w-8 h-8 p-1.5 hover:bg-slate-300/10 rounded-lg" />
+                        <GitHubLogoIcon className="w-9 h-9 p-[7px] hover:bg-slate-300/10 rounded-lg" />
                     </Link>
                     <Link href="">
-                        <Heart className="w-8 h-8 p-1.5 hover:bg-slate-300/10 rounded-lg" />
+                        <Heart className="w-9 h-9 p-[6px] hover:bg-slate-300/10 rounded-lg" />
                     </Link>
-                    <Menu className="w-8 h-8 p-1.5 hover:bg-slate-300/10 rounded-lg" />
+                    <Menu className="w-9 h-9 p-[5px] hover:bg-slate-300/10 rounded-lg" />
                 </div>
             </div>
         </div>

@@ -58,9 +58,9 @@ export default function RootLayout({
     )}>
       <body className=''>
         <Image src={gradientImg} alt="background" className="absolute z-[-1] left-0 w-full h-1/2 md:h-2/3 object-cover" role="progressbar" priority />
-        <div className='flex-auto min-w-0 flex flex-col md:px-0 container max-w-3xl mx-auto min-h-screen px-4 md:pt-16'>
-          <div className='flex-1'>
+        <div className='flex-auto min-w-0 flex px-0 flex-col container max-w-3xl mx-auto min-h-screen md:pt-16'>
             <Nav />
+          <div className='flex-1 px-4'>
             {children}
           </div>
           <Toaster />
