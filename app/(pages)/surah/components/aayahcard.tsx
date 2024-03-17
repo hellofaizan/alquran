@@ -17,6 +17,7 @@ const Aayahcard = ({ data, surahnum }: Props ) => {
                 <p className='text-sm p-[5px] text-center hover:bg-slate-300/10 rounded-lg font-bold font-mono'>{surahnum}:{data.number.inSurah}</p>
                 <Play className="w-7 h-7 p-[6px] hover:bg-slate-300/10 rounded-lg" onClick={() => {
                     // play aayah audio from data.audio.primary
+                    
                 }} />
                 <FileImage className="w-7 h-7 p-[6px] hover:bg-slate-300/10 rounded-lg" onClick={() => {
                     // show aayat image from https://cdn.islamic.network/quran/images/${surahnum}_${data.number.inSurah}.png
