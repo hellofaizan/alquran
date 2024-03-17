@@ -3,11 +3,12 @@
 import React from 'react'
 import { useState, useEffect } from "react"
 import Aayahcard from '../components/aayahcard'
+import { Skeleton } from '@/components/ui/skeleton'
 
 
 const SurahPage = ({ params }: { params: { surahnum: string } }) => {
-  const [data, setData] = useState([])
-  const [aayahList, setAayahList] = useState([])
+  const [data, setData] = useState<any>([])
+  const [aayahList, setAayahList] = useState<any[]>([])
   const surahnum = params.surahnum
 
   useEffect(() => {
@@ -38,11 +39,25 @@ const SurahPage = ({ params }: { params: { surahnum: string } }) => {
       <p className='text-4xl md:text-5xl font-arabic mb-5'>بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
 
       {
-        aayahList
-          .map((item) => (
-            <Aayahcard key={item} data={item} surahnum={surahnum} />
-          ))
-      }
+        aayahList.length > 0 ?
+          (
+            aayahList
+              .map((item) => (
+                <Aayahcard key={item} data={item} surahnum={surahnum} />
+              ))
+          ) : (
+            <>
+            <div className='flex flex-col gap-4 w-full'>
+              <Skeleton className="w-1/2 h-8 rounded-md" />
+              <Skeleton className="w-full h-20 rounded-md text-end" />
+              <Skeleton className="w-10/12 h-12 rounded-md text-end" />
+              <Skeleton className="w-full h-[2px] rounded-md text-end" />
+              <Skeleton className="w-1/2 h-8 rounded-md" />
+              <Skeleton className="w-full h-20 rounded-md text-end" />
+              <Skeleton className="w-10/12 h-12 rounded-md text-end" />
+            </div>
+            </>
+          )}
     </div>
   )
 }
