@@ -31,6 +31,11 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      fontFamily: {
+        uthmanic: ["var(--font-uthmanic)"],
+        arabic: ["var(--font-arabic)"],
+        persian: ["var(--font-persian)"],
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],

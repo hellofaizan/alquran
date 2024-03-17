@@ -6,6 +6,8 @@ import { Toaster } from "@/components/ui/sonner"
 import Nav from '@/components/navbar';
 import Image from 'next/image';
 import gradientImg from "@/public/topimg.png";
+import localfont from '@next/font/local'
+import { Inter } from 'next/font/google'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://hellofaizan.tech'),
@@ -43,6 +45,18 @@ export const metadata: Metadata = {
   // },
 };
 
+const inter = Inter({ subsets: ['latin'] })
+const uthmanic = localfont({
+  src: '../public/fonts/Uthman.otf',
+  display: 'swap',
+  variable: "--font-uthmanic",
+})
+const arabic = localfont({
+  src: '../public/fonts/Arabic.ttf',
+  display: 'swap',
+  variable: "--font-arabic",
+})
+
 const cx = (...classes: any) => classes.filter(Boolean).join(' ');
 
 export default function RootLayout({
@@ -56,7 +70,7 @@ export default function RootLayout({
       GeistSans.variable,
       GeistMono.variable
     )}>
-      <body className=''>
+      <body className={`${inter.className} ${arabic.className} ${uthmanic.variable} `}>
         <Image src={gradientImg} alt="background" className="absolute z-[-1] left-0 w-full h-1/2 md:h-2/3 object-cover" role="progressbar" priority />
         <div className='flex-auto min-w-0 flex px-0 flex-col container max-w-3xl mx-auto min-h-screen md:pt-16'>
             <Nav />

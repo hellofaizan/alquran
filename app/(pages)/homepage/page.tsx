@@ -63,7 +63,7 @@ const HomePage = () => {
         <main className="w-full flex items-center justify-center">
             <div className="w-full items-center mt-5 mb-5">
                 <div className="flex justify-between items-center">
-                    <h1 className="text-4xl font-semibold">List Surah <span className="text-xs text-gray-400">Total: {listSurah.length}</span></h1>
+                    <h1 className="text-4xl font-semibold">List Surah</h1>
                     {/* Sort By dropdown */}
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -75,8 +75,8 @@ const HomePage = () => {
                             <DropdownMenuRadioGroup value={sort} onValueChange={setSort}>
                                 <DropdownMenuRadioItem value="acc">Accending</DropdownMenuRadioItem>
                                 <DropdownMenuRadioItem value="dec">Decending</DropdownMenuRadioItem>
-                                <DropdownMenuRadioItem value="accaaya"><FaArrowTrendUp className="mr-1" /> Aayah (Low to high)</DropdownMenuRadioItem>
-                                <DropdownMenuRadioItem value="decaaya"><FaArrowTrendDown className="mr-1" />Aayah (High to low)</DropdownMenuRadioItem>
+                                <DropdownMenuRadioItem value="accaaya">Lowest Aayah</DropdownMenuRadioItem>
+                                <DropdownMenuRadioItem value="decaaya">Maximum Aayah</DropdownMenuRadioItem>
                             </DropdownMenuRadioGroup>
                         </DropdownMenuContent>
                     </DropdownMenu>
