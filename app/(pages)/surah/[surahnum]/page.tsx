@@ -4,6 +4,7 @@ import React from 'react'
 import { useState, useEffect } from "react"
 import Aayahcard from '../components/aayahcard'
 import { Skeleton } from '@/components/ui/skeleton'
+import Player from '@/components/audioplayer'
 
 
 const SurahPage = ({ params }: { params: { surahnum: string } }) => {
@@ -47,17 +48,19 @@ const SurahPage = ({ params }: { params: { surahnum: string } }) => {
               ))
           ) : (
             <>
-            <div className='flex flex-col gap-4 w-full'>
-              <Skeleton className="w-1/2 h-8 rounded-md" />
-              <Skeleton className="w-full h-20 rounded-md text-end" />
-              <Skeleton className="w-10/12 h-12 rounded-md text-end" />
-              <Skeleton className="w-full h-[2px] rounded-md text-end" />
-              <Skeleton className="w-1/2 h-8 rounded-md" />
-              <Skeleton className="w-full h-20 rounded-md text-end" />
-              <Skeleton className="w-10/12 h-12 rounded-md text-end" />
-            </div>
+              <div className='flex flex-col gap-4 w-full'>
+                <Skeleton className="w-1/2 h-8 rounded-md" />
+                <Skeleton className="w-full h-20 rounded-md text-end" />
+                <Skeleton className="w-10/12 h-12 rounded-md text-end" />
+                <Skeleton className="w-full h-[2px] rounded-md text-end" />
+                <Skeleton className="w-1/2 h-8 rounded-md" />
+                <Skeleton className="w-full h-20 rounded-md text-end" />
+                <Skeleton className="w-10/12 h-12 rounded-md text-end" />
+              </div>
             </>
           )}
+
+      <Player surah={surahnum} />
     </div>
   )
 }

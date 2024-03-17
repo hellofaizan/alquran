@@ -18,7 +18,7 @@ const SurahCard = ({ data }: Props) => {
                 </div>
             </div>
             <div className='flex flex-col text-end'>
-                <p className='font-uthmanic text-base text-gray-200'>{data.number}</p>
+                <p className='font-uthmanic text-base text-gray-200'>{data.name}</p>
                 <p className='text-xs font-light text-gray-400'>{data.numberOfAyahs} Aayahs</p>
             </div>
         </Link>
