@@ -15,7 +15,7 @@ const SurahPage = ({ params }: { params: { surahnum: string } }) => {
   useEffect(() => {
     fetchData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [data])
 
   const fetchData = async () => {
 
@@ -33,10 +33,23 @@ const SurahPage = ({ params }: { params: { surahnum: string } }) => {
       // })
     }
   }
-  // const verses = data?.verses
+  const surahName = data.name?.long
+
+  if (data) {
+    const surahInfo = {
+      name: surahName,
+      number: surahnum,
+      verses: data.numberOfVerses,
+      enName: data.name?.transliteration.en
+    }
+    // continue reading feature
+    localStorage.setItem('continueSurah', JSON.stringify(surahInfo))
+  }
+
+
   return (
     <div className='flex flex-col gap-3 mt-5 w-full items-center justify-center mb-2'>
-      <p className='text-4xl md:text-5xl font-uthmanic'>{data.name?.long}</p>
+      <p className='text-4xl md:text-5xl font-uthmanic'>{surahName}</p>
       <p className='text-4xl md:text-5xl font-arabic mb-5'>بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
 
       {
@@ -44,7 +57,7 @@ const SurahPage = ({ params }: { params: { surahnum: string } }) => {
           (
             aayahList
               .map((item) => (
-                <Aayahcard key={item} data={item} surahnum={surahnum} />
+                <Aayahcard key={item.number.inSurah} data={item} surahnum={surahnum} />
               ))
           ) : (
             <>

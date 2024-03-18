@@ -18,15 +18,19 @@ import {
 import { Search, X } from "lucide-react";
 import SurahCard from '@/components/surahcard';
 import { Input } from '@/components/ui/input';
+import Link from 'next/link';
 
 const HomePage = () => {
     const { toast } = useToast()
-    const [listSurah, setListSurah] = useState([])
+    const [listSurah, setListSurah] = useState<any>([])
     const [search, setSearch] = useState("")
     const [sort, setSort] = useState("acc")
 
+    const [continueSurah, setContinueSurah] = useState<any>()
+
     useEffect(() => {
         fetchData()
+        fetchContinueSurah()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sort])
 
@@ -55,19 +59,32 @@ const HomePage = () => {
         } else if (sort === "decaaya") {
             setListSurah(data.sort((a: any, b: any) => b.numberOfAyahs - a.numberOfAyahs))
         }
+    }
 
-        console.log(data)
+    const fetchContinueSurah = () => {
+        const continueSurahData = localStorage.getItem('continueSurah')
+        if (continueSurahData) {
+            setContinueSurah(JSON.parse(continueSurahData))
+        }
     }
 
     return (
         <main className="w-full flex items-center justify-center">
             <div className="w-full items-center mt-5 mb-5">
+
+                {continueSurah && (
+                    <Link href={`/surah/${continueSurah.number}`} className="flex items-center gap-2 p-2 bg-slate-300/10 rounded-md mb-5">
+                        <p className="text-sm font-semibold">Continue Reading</p>
+                        <p className="text-sm font-light">{continueSurah.name} - {continueSurah.enName}</p>
+                    </Link>
+                )}
+
                 <div className="flex justify-between items-center">
                     <h1 className="text-4xl font-semibold">List Surah</h1>
                     {/* Sort By dropdown */}
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <p className="flex items-center gap-1 cursor-pointer px-2 py-[5px] border rounded-md">Sort By <FaArrowUp91 /></p>
+                            <p className="flex items-center gap-1 cursor-pointer px-2 py-[4px] border rounded-md text-sm">Sort By <FaArrowUp91 /></p>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="w-56">
                             <DropdownMenuLabel>Sort By</DropdownMenuLabel>
@@ -129,8 +146,8 @@ const HomePage = () => {
                                     return item
                                 }
                             })
-                            .map((item) => (
-                                <SurahCard key={item} data={item} />
+                            .map((item: any) => (
+                                <SurahCard key={item.number} data={item} />
                             ))
                     ) : (
                         <>
