@@ -7,7 +7,16 @@ import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import appLogo from "@/public/assets/applogo-white.png";
 import { cn } from "@/lib/utils";
-
+import {
+    Sheet,
+    SheetClose,
+    SheetContent,
+    SheetDescription,
+    SheetFooter,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from "@/components/ui/sheet";
 const Nav = () => {
     const [scrolling, setScrolling] = useState(false);
     const [windowWidth, setWindowWidth] = useState(0); // Set initial width to 0
@@ -45,8 +54,8 @@ const Nav = () => {
         <div className={cn(
             "sticky top-0 w-full justify-center px-4 z-10",
             scrolling
-            ? "backdrop-blur-lg"
-            : "backdrop-blur-0"
+                ? "backdrop-blur-lg"
+                : "backdrop-blur-0"
         )}>
             <div className="flex justify-between flex-row py-5">
                 {/* Menu and Logo */}
@@ -65,7 +74,17 @@ const Nav = () => {
                     <Link href="">
                         <Heart className="w-9 h-9 p-[6px] hover:bg-slate-300/10 rounded-lg" />
                     </Link>
-                    <Menu className="w-9 h-9 p-[5px] hover:bg-slate-300/10 rounded-lg" />
+                    <Sheet>
+                        <SheetTrigger>
+                            <Menu className="w-9 h-9 p-[5px] hover:bg-slate-300/10 rounded-lg" />
+                        </SheetTrigger>
+                        <SheetContent>
+                                
+                            <SheetFooter>
+                                <p className="text-center">© 2024 Al Quran</p>
+                            </SheetFooter>
+                        </SheetContent>
+                    </Sheet>
                 </div>
             </div>
         </div>
