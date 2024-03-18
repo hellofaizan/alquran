@@ -1,4 +1,5 @@
 import { Separator } from '@/components/ui/separator'
+import axios from 'axios'
 import html2canvas from 'html2canvas'
 import { BookOpen, FileImage, Play, Share2 } from 'lucide-react'
 import React, { useRef } from 'react'
@@ -11,6 +12,20 @@ interface Props {
 }
 const Aayahcard = ({ data, surahnum }: Props) => {
     const layoutRef = useRef(null);
+    const [urTranslation, setUrTranslation] = React.useState('')
+
+    const aayahnum = data.number.inSurah
+
+    const getUrdutranslation = async () => {
+        const urdu_tr = await axios.get(`/api/surah/ur_translation/${surahnum}/${aayahnum}`).then((res) => {
+            return res.data.text
+        })
+        setUrTranslation(urdu_tr)
+        return urdu_tr
+    }
+
+    getUrdutranslation()
+
     const shareAayah = () => {
         // convert the layout into an image and share that image
         if (layoutRef.current) {
@@ -59,7 +74,10 @@ const Aayahcard = ({ data, surahnum }: Props) => {
                 <div className='text-end py-2 items-center'><p className='text-3xl md:text-4xl font-uthmanic leading-loose'>{data.text.arab}<span className='text-lg font-light mr-2'>{data.number.inSurah}</span></p></div>
 
                 {/* english translation */}
-                <p className='text-base md:text-lg py-3 font-serif text-gray-200'>{data.translation.en}</p>
+                <p className='text-base md:text-lg py-3 font-mono text-gray-200'><span className='text-xs text-gray-500 font-mono'>EN:</span>{data.translation.en}</p>
+
+                {/* Urdu Translation */}
+                <div className='text-end py-1 mb-2 items-center'><p className='text-lg md:text-xl font-uthmanic text-gray-200'>{urTranslation}<span className='text-xs text-gray-500 font-mono'>:UR</span></p></div>
             </div>
 
             <Separator className='mt-3' />
