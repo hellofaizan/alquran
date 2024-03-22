@@ -52,6 +52,7 @@ const SurahPage = ({ params }: { params: { surahnum: string } }) => {
       <p className='text-4xl md:text-5xl font-uthmanic'>{surahName}</p>
       <p className='text-4xl md:text-5xl font-arabic mb-5'>بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
 
+      <div className='mb-14'>
       {
         aayahList.length > 0 ?
           (
@@ -72,6 +73,7 @@ const SurahPage = ({ params }: { params: { surahnum: string } }) => {
               </div>
             </>
           )}
+      </div>
 
       <Player surah={surahnum} />
     </div>

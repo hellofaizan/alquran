@@ -10,19 +10,25 @@ import localfont from '@next/font/local'
 import { Inter } from 'next/font/google'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://hellofaizan.tech'),
+  metadataBase: new URL('https://v2.hellofaizan.tech'),
   title: {
-    default: 'HelloFaizan',
+    default: 'Al Quran Kareen',
     template: '%s | HelloFaizan',
   },
-  description: 'I build Internet products.',
+  description: 'Free Open Source Quran App with Englsih and Urdu translations',
   openGraph: {
-    title: 'HelloFaizan',
-    description: 'I build Internet products.',
+    title: 'Al Quran Kareen',
+    description: 'Free Open Source Quran App with Englsih and Urdu translations',
     url: 'https://hellofaizan.tech',
     siteName: 'HelloFaizan',
     locale: 'en_US',
     type: 'website',
+    images: [
+      {
+        url: 'https://alquran.hellofaizan.tech/assets/islam.jpg',
+        alt: 'HelloFaizan',
+      },
+    ],
   },
   robots: {
     index: true,
@@ -38,6 +44,9 @@ export const metadata: Metadata = {
   twitter: {
     title: 'HelloFaizan',
     card: 'summary_large_image',
+    site: '@hellofaizaan',
+    creator: '@hellofaizaan',
+
   },
   // verification: {
   //   google: 'eZSdmzAXlLkKhNJzfgwDqWORghxnJ8qR9_CHdAh5-xw',

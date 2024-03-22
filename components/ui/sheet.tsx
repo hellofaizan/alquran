@@ -69,7 +69,6 @@ const SheetContent = React.forwardRef<
     >
       <div className="flex flex-col">
         <Image src={topImage} alt="background" className="left-0 w-full object-cover" role="progressbar" priority />
-        <p className="text-center text-sm font-mono">AlQuran by <Link className="underline" href={`https://hellofaizan.tech`} target="_blank">HelloFaizan</Link></p>
         <div className="px-5 py-2">
           {children}
         </div>
