@@ -51,13 +51,6 @@ const Nav = () => {
         };
     }, []);
 
-    const githubLink = () => {
-        window.open("https://github.com/hellofaizan/alquran", "_blank");
-    }
-    const donoLink = () => {
-        window.open("https://www.buymeacoffee.com/hellofaizan", "_blank");
-    }
-
     return (
         <div className={cn(
             "sticky top-0 w-full justify-center px-4 z-10",
@@ -76,13 +69,13 @@ const Nav = () => {
 
                 {/* Icons End */}
                 <div className="flex items-center gap-1">
-                    <Link href="">
-                        <GitHubLogoIcon className="w-9 h-9 p-[7px] hover:bg-slate-300/10 rounded-lg" onClick={githubLink}/>
+                    <Link href="https://github.com/hellofaizan/alquran" target="_blank">
+                        <GitHubLogoIcon className="w-9 h-9 p-[7px] hover:bg-slate-300/10 rounded-lg"/>
                     </Link>
-                    <Link href="">
-                        <Heart className="w-9 h-9 p-[6px] hover:bg-slate-300/10 rounded-lg" onClick={donoLink} />
+                    <Link href="https://www.buymeacoffee.com/hellofaizan" target="_blank">
+                        <Heart className="w-9 h-9 p-[6px] hover:bg-slate-300/10 rounded-lg" />
                     </Link>
-                    <Sheet>
+                    {/* <Sheet>
                         <SheetTrigger>
                             <Menu className="w-9 h-9 p-[5px] hover:bg-slate-300/10 rounded-lg" />
                         </SheetTrigger>
@@ -92,7 +85,7 @@ const Nav = () => {
                                 <p className="text-center">© 2024 Al Quran</p>
                             </SheetFooter>
                         </SheetContent>
-                    </Sheet>
+                    </Sheet> */}
                 </div>
             </div>
         </div>
