@@ -95,9 +95,6 @@ const Aayahcard = ({ data, surahnum }: Props) => {
         <div className="text-end py-1 items-center">
           <p className="text-3xl md:text-4xl font-uthmanic leading-relaxed">
             {data.text.arab}
-            <span className="text-lg font-light mr-2">
-              {data.number.inSurah}
-            </span>
           </p>
         </div>
 
