@@ -66,11 +66,11 @@ const Aayahcard = ({ data, surahnum }: Props) => {
             preload="metadata"
           ></audio>
           {aayahLoading ? (
-            <Loader className="animate-spin" size={15} />
+            <Loader className="w-7 h-7 p-[6px] hover:bg-slate-300/10 rounded-lg animate-spin" />
           ) : aayahPlaying ? (
-            <Pause size={15} />
+            <Pause className="w-7 h-7 p-[6px] hover:bg-slate-300/10 rounded-lg" />
           ) : (
-            <Play size={15} />
+            <Play className="w-7 h-7 p-[6px] hover:bg-slate-300/10 rounded-lg" />
           )}
         </button>
         <FileImage
