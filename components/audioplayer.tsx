@@ -78,7 +78,7 @@ const Player = ({ surah }: props) => {
     }
 
     return (
-        <div className="flex fixed bottom-0 w-full md:w-2/5 justify-center items-center">
+        <div className="flex fixed bottom-0 w-full max-w-3xl justify-center items-center">
             <div className="flex w-full items-center justify-between gap-4 bg-[#393939]/40 backdrop-blur-md px-4 py-3 text-white">
                 <audio ref={audioPlayer} src={`https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/${surah}.mp3`} preload="metadata"></audio>
                 <div className='flex gap-5'>
