@@ -5,10 +5,10 @@ import { env } from "process";
 
 export async function GET(
   req: Request,
-  params: { params: { surahnum: number } }
+  params: { params: Promise<{ surahnum: number }> }
 ) {
   const BASEURL = env.BASEAPIURL;
-  const suraId = await params.params.surahnum;
+  const suraId = (await params.params).surahnum;
   const fetchApi = BASEURL + "/surah/" + suraId;
 
   const response = await fetch(`${fetchApi}`, {

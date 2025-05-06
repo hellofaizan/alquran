@@ -5,11 +5,11 @@ import { env } from "process";
 
 export async function GET(
   req: Request,
-  params: { params: { surahnum: number, aayahnum: number } }
+  params: { params: Promise<{ surahnum: number, aayahnum: number }> }
 ) {
   const BASEURL = env.URDUBASEAPIURL || "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/urd-muhammadjunagar/";
-  const suraId = params.params.surahnum
-  const aayahId = params.params.aayahnum
+  const suraId = (await params.params).surahnum
+  const aayahId = (await params.params).aayahnum
   const fetchApi = BASEURL+suraId+"/"+aayahId+".json";
 
   const response = await fetch(`${fetchApi}`, {

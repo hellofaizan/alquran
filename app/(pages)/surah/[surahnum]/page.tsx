@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback, use } from "react";
 import Aayahcard from "../components/aayahcard";
 import { Skeleton } from "@/components/ui/skeleton";
 import Player from "@/components/audioplayer";
 
-const SurahPage = ({ params }: { params: { surahnum: string } }) => {
+const SurahPage = (props: { params: Promise<{ surahnum: string }> }) => {
+  const params = use(props.params);
   // TODO: In future Next.js versions, unwrap params with React.use(params)
   const surahnum = params.surahnum;
   const [data, setData] = useState<any>({});
