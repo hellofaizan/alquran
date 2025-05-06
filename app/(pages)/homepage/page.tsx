@@ -19,6 +19,7 @@ import { Search, X } from "lucide-react";
 import SurahCard from "@/components/surahcard";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import Nav from "@/components/navbar";
 
 const HomePage = () => {
   const { toast } = useToast();
@@ -102,11 +103,12 @@ const HomePage = () => {
   };
 
   return (
-    <main className="w-full flex items-center justify-center">
-      <div className="w-full items-center mt-5 mb-5">
+    <main className="w-full flex items-center flex-auto min-w-0 flex-col container max-w-3xl mx-auto min-h-screen md:pt-16 px-0">
+      <Nav />
+      <div className="w-full items-center mt-5 mb-5 px-3 md:px-0">
         {continueSurah && (
           <Link
-            href={`/surah/${continueSurah.number}`}
+            href={`/surah/${continueSurah.number}#${continueSurah.lastAayah}`}
             className="flex items-center gap-2 p-2 bg-slate-300/10 rounded-md mb-5"
           >
             <p className="text-sm font-semibold">Continue Reading</p>

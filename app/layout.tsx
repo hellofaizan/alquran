@@ -80,13 +80,11 @@ export default function RootLayout({
       GeistMono.variable
     )}>
       <body className={`${inter.className} ${uthmanic.variable}`}>
-        <div className='flex-auto min-w-0 flex px-0 flex-col container max-w-3xl mx-auto min-h-screen md:pt-16'>
-          <Nav />
-          <div className='flex-1 px-4'>
-            {children}
-          </div>
-          <Toaster />
+        {/* <Nav /> */}
+        <div className='flex-1 min-h-screen w-full bg-[#181818]'>
+          {children}
         </div>
+        <Toaster />
       </body>
     </html>
   )

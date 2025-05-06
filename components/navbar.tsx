@@ -7,16 +7,7 @@ import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import appLogo from "@/public/assets/applogo-white.png";
 import { cn } from "@/lib/utils";
-import {
-    Sheet,
-    SheetClose,
-    SheetContent,
-    SheetDescription,
-    SheetFooter,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
-} from "@/components/ui/sheet";
+
 const Nav = () => {
     const [scrolling, setScrolling] = useState(false);
     const [windowWidth, setWindowWidth] = useState(0); // Set initial width to 0
@@ -53,17 +44,17 @@ const Nav = () => {
 
     return (
         <div className={cn(
-            "sticky top-0 w-full justify-center px-4 z-10",
+            "sticky top-0 w-full justify-center px-2 z-10",
             scrolling
                 ? "backdrop-blur-lg"
                 : "backdrop-blur-0"
         )}>
-            <div className="flex justify-between flex-row py-5">
+            <div className="flex justify-between flex-row py-2">
                 {/* Menu and Logo */}
                 <div className="flex gap-2 items-center">
                     <Link href={"/"} className="flex items-center justify-center gap-2">
                         <Image src={appLogo} className="w-10 h-10" alt="App Logo" />
-                        <p className="font-medium text-3xl font-serif">Al Quran</p>
+                        <p className="font-medium text-2xl font-uthmanic">Al Quran</p>
                     </Link>
                 </div>
 

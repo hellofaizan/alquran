@@ -7,8 +7,52 @@ import { FaEllipsisVertical } from "react-icons/fa6";
 interface Props {
   data: any;
   surahnum: string;
+  translationSettings?: {
+    showEnglish: boolean;
+    showUrdu: boolean;
+    fontSizeArabic?: number;
+    fontSizeEnglish?: number;
+    fontSizeUrdu?: number;
+  };
+  fontSizeArabic?: number;
+  fontSizeEnglish?: number;
+  fontSizeUrdu?: number;
 }
-const Aayahcard = ({ data, surahnum }: Props) => {
+const fontSizeMap = {
+  1: {
+    arabic: "text-xl md:text-2xl",
+    english: "text-sm md:text-base",
+    urdu: "text-base md:text-lg",
+  },
+  2: {
+    arabic: "text-2xl md:text-3xl",
+    english: "text-base md:text-lg",
+    urdu: "text-lg md:text-xl",
+  },
+  3: {
+    arabic: "text-3xl md:text-4xl",
+    english: "text-lg md:text-xl",
+    urdu: "text-xl md:text-2xl",
+  },
+  4: {
+    arabic: "text-4xl md:text-5xl",
+    english: "text-xl md:text-2xl",
+    urdu: "text-2xl md:text-3xl",
+  },
+  5: {
+    arabic: "text-5xl md:text-6xl",
+    english: "text-2xl md:text-3xl",
+    urdu: "text-3xl md:text-4xl",
+  },
+};
+const Aayahcard = ({
+  data,
+  surahnum,
+  translationSettings,
+  fontSizeArabic,
+  fontSizeEnglish,
+  fontSizeUrdu,
+}: Props) => {
   const layoutRef = useRef(null);
   const [aayahLoading, setAayahLoading] = React.useState(false);
   const [aayahPlaying, setAayahPlaying] = React.useState(false);
@@ -36,6 +80,20 @@ const Aayahcard = ({ data, surahnum }: Props) => {
       setAayahPlaying(false);
     });
   };
+
+  // Use font sizes from props or translationSettings, or default to 3
+  const sizeArabic = fontSizeArabic || translationSettings?.fontSizeArabic || 3;
+  const sizeEnglish =
+    fontSizeEnglish || translationSettings?.fontSizeEnglish || 3;
+  const sizeUrdu = fontSizeUrdu || translationSettings?.fontSizeUrdu || 3;
+  const fontArabic =
+    fontSizeMap[sizeArabic as 1 | 2 | 3 | 4 | 5]?.arabic ||
+    fontSizeMap[3].arabic;
+  const fontEnglish =
+    fontSizeMap[sizeEnglish as 1 | 2 | 3 | 4 | 5]?.english ||
+    fontSizeMap[3].english;
+  const fontUrdu =
+    fontSizeMap[sizeUrdu as 1 | 2 | 3 | 4 | 5]?.urdu || fontSizeMap[3].urdu;
 
   return (
     <div className="flex flex-col min-w-full">
@@ -75,27 +133,29 @@ const Aayahcard = ({ data, surahnum }: Props) => {
         <FaEllipsisVertical className="w-7 h-7 p-[6px] hover:bg-slate-300/10 rounded-lg" />
       </div>
 
-      <div className="flex flex-col" ref={layoutRef}>
-        {/* arabic aarah */}
+      <div className="flex flex-col gap-2" ref={layoutRef}>
+        {/* arabic aayah */}
         <div className="text-end py-1 items-center">
-          <p className="text-3xl md:text-4xl font-uthmanic leading-relaxed">
+          <p className={`font-uthmanic leading-relaxed ${fontArabic}`}>
             {data.text.arab}
           </p>
         </div>
 
-        {/* english translation */}
-        <p className="text-base md:text-lg pb-2 md:pt-2 font-mono text-gray-200">
-          <span className="text-xs text-gray-500 font-mono">EN:</span>
-          {data.text.translation}
-        </p>
-
         {/* Urdu Translation */}
-        <div className="text-end py-1 mb-2 items-center">
-          <p className="text-lg md:text-xl font-uthmanic text-gray-200">
-            {data.text.urdu}
-            <span className="text-xs text-gray-500 font-mono">:UR</span>
+        {translationSettings && translationSettings.showUrdu && (
+          <div className="text-end py-1 mb-2 items-center">
+            <p className={`font-uthmanic text-gray-200 ${fontUrdu}`}>
+              {data.text.urdu} {"۔"}
+            </p>
+          </div>
+        )}
+
+        {/* english translation */}
+        {(!translationSettings || translationSettings.showEnglish) && (
+          <p className={`pb-2 md:pt-2 font-mono text-gray-200 ${fontEnglish}`}>
+            {data.text.translation}
           </p>
-        </div>
+        )}
       </div>
 
       <Separator className="mt-3" />
