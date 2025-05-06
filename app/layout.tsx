@@ -6,26 +6,26 @@ import { Toaster } from "@/components/ui/sonner"
 import Nav from '@/components/navbar';
 import Image from 'next/image';
 import gradientImg from "@/public/topimg.png";
-import localfont from '@next/font/local'
+import localfont from 'next/font/local'
 import { Inter } from 'next/font/google'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://v2.hellofaizan.tech'),
+  metadataBase: new URL('https://alquran.mohammadfaizan.in'),
   title: {
     default: 'Al Quran Kareen',
-    template: '%s | HelloFaizan',
+    template: '%s | Mohammad Faizan',
   },
   description: 'Free Open Source Quran App with Englsih and Urdu translations',
   openGraph: {
     title: 'Al Quran Kareen',
     description: 'Free Open Source Quran App with Englsih and Urdu translations',
-    url: 'https://hellofaizan.tech',
-    siteName: 'HelloFaizan',
+    url: 'https://mohammadfaizan.in',
+    siteName: 'Al Quran',
     locale: 'en_US',
     type: 'website',
     images: [
       {
-        url: 'https://alquran.hellofaizan.tech/assets/islam.jpg',
+        url: 'https://alquran.mohammadfaizan.in/assets/islam.jpg',
         alt: 'HelloFaizan',
       },
     ],
@@ -80,7 +80,6 @@ export default function RootLayout({
       GeistMono.variable
     )}>
       <body className={`${inter.className} ${uthmanic.variable}`}>
-        <Image src={gradientImg} alt="background" className="absolute z-[-1] left-0 w-full h-1/2 md:h-2/3 object-cover" role="progressbar" priority />
         <div className='flex-auto min-w-0 flex px-0 flex-col container max-w-3xl mx-auto min-h-screen md:pt-16'>
           <Nav />
           <div className='flex-1 px-4'>

@@ -27,7 +27,7 @@ const Aayahcard = ({ data, surahnum }: Props) => {
     return urdu_tr;
   };
 
-  getUrdutranslation();
+  // getUrdutranslation();
 
   const shareAayah = () => {
     const text = `${data.text.arab} -- ${urTranslation}`;
@@ -101,13 +101,13 @@ const Aayahcard = ({ data, surahnum }: Props) => {
         {/* english translation */}
         <p className="text-base md:text-lg pb-2 md:pt-2 font-mono text-gray-200">
           <span className="text-xs text-gray-500 font-mono">EN:</span>
-          {data.translation.en}
+          {data.text.translation}
         </p>
 
         {/* Urdu Translation */}
         <div className="text-end py-1 mb-2 items-center">
           <p className="text-lg md:text-xl font-uthmanic text-gray-200">
-            {urTranslation}
+            {/* {urTranslation} */}
             <span className="text-xs text-gray-500 font-mono">:UR</span>
           </p>
         </div>

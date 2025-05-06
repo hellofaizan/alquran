@@ -6,13 +6,16 @@ import { env } from "process";
 export async function GET(
   req: Request,
 ) {
-  const BASEURL = env.BASEAPIURL;
-  const response = await fetch(`https://api.alquran.cloud/v1/surah`, {
+  const BASEURL = env.BASEAPIURL as string;
+  const { searchParams } = new URL(req.url);
+  const page = searchParams.get('page') || '1';
+  const response = await fetch(`${BASEURL}/surah?page=${page}&limit=114`, {
     method: "GET",
     headers: {
-        "Content-Type": "application/json",
-    },
-    });
-    const data = await response.json();
-    return NextResponse.json(data);
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${env.APITOKEN}`
+    }
+  });
+  const data = await response.json();
+  return NextResponse.json(data);
 }
