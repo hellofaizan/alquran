@@ -7,7 +7,6 @@ import Player from "@/components/audioplayer";
 
 const SurahPage = (props: { params: Promise<{ surahnum: string }> }) => {
   const params = use(props.params);
-  // TODO: In future Next.js versions, unwrap params with React.use(params)
   const surahnum = params.surahnum;
   const [data, setData] = useState<any>({});
   const [aayahList, setAayahList] = useState<any[]>([]);
@@ -16,18 +15,26 @@ const SurahPage = (props: { params: Promise<{ surahnum: string }> }) => {
   const [loading, setLoading] = useState(false);
   const observer = useRef<any>(null);
 
+  const currentPageRef = useRef(currentPage);
+  const hasNextPageRef = useRef(hasNextPage);
+
+  useEffect(() => {
+    currentPageRef.current = currentPage;
+    hasNextPageRef.current = hasNextPage;
+  }, [currentPage, hasNextPage]);
+
   const lastAayahElementRef = useCallback(
     (node: any) => {
       if (loading) return;
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasNextPage) {
-          fetchData(currentPage + 1);
+        if (entries[0].isIntersecting && hasNextPageRef.current) {
+          fetchData(currentPageRef.current + 1);
         }
       });
       if (node) observer.current.observe(node);
     },
-    [loading, currentPage, hasNextPage]
+    [loading]
   );
 
   useEffect(() => {
@@ -89,7 +96,13 @@ const SurahPage = (props: { params: Promise<{ surahnum: string }> }) => {
                 </div>
               );
             } else {
-              return <Aayahcard key={item.number.inQuran} data={item} surahnum={surahnum} />;
+              return (
+                <Aayahcard
+                  key={item.number.inQuran}
+                  data={item}
+                  surahnum={surahnum}
+                />
+              );
             }
           })
         ) : (

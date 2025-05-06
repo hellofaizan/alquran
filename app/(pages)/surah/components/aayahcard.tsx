@@ -10,27 +10,12 @@ interface Props {
 }
 const Aayahcard = ({ data, surahnum }: Props) => {
   const layoutRef = useRef(null);
-  const [urTranslation, setUrTranslation] = React.useState("");
   const [aayahLoading, setAayahLoading] = React.useState(false);
   const [aayahPlaying, setAayahPlaying] = React.useState(false);
   const audioPlayer = useRef<any>(null);
 
-  const aayahnum = data.number.inSurah;
-
-  const getUrdutranslation = async () => {
-    const urdu_tr = await axios
-      .get(`/api/surah/ur_translation/${surahnum}/${aayahnum}`)
-      .then((res) => {
-        return res.data.text;
-      });
-    setUrTranslation(urdu_tr);
-    return urdu_tr;
-  };
-
-  // getUrdutranslation();
-
   const shareAayah = () => {
-    const text = `${data.text.arab} -- ${urTranslation}`;
+    const text = `${data.text.arab} -- ${data.text.translation}`;
     const shareData = {
       title: "Quran Aayah",
       text: text,
@@ -107,7 +92,7 @@ const Aayahcard = ({ data, surahnum }: Props) => {
         {/* Urdu Translation */}
         <div className="text-end py-1 mb-2 items-center">
           <p className="text-lg md:text-xl font-uthmanic text-gray-200">
-            {/* {urTranslation} */}
+            {data.text.urdu}
             <span className="text-xs text-gray-500 font-mono">:UR</span>
           </p>
         </div>

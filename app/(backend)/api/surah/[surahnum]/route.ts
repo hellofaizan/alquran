@@ -8,10 +8,18 @@ export async function GET(
   params: { params: Promise<{ surahnum: number }> }
 ) {
   const BASEURL = env.BASEAPIURL;
+  const { searchParams } = new URL(req.url);
+  const page = searchParams.get('page');
+  const limit = searchParams.get('limit');
   const suraId = (await params.params).surahnum;
-  const fetchApi = BASEURL + "/surah/" + suraId;
 
-  const response = await fetch(`${fetchApi}`, {
+  let fetchApi = `${BASEURL}/surah/${suraId}`;
+  const query: string[] = [];
+  if (page) query.push(`page=${page}`);
+  if (limit) query.push(`limit=${limit}`);
+  if (query.length) fetchApi += `?${query.join('&')}`;
+
+  const response = await fetch(fetchApi, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
