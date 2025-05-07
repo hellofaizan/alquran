@@ -120,8 +120,13 @@ const SurahPage = (props: { params: Promise<{ surahnum: string }> }) => {
 
   return (
     <>
-      <SurahNavbar onSettingsToggle={handleSettingsToggle} />
-      <div className="flex flex-row w-full min-h-[93vh]  bg-[#181818] overflow-hidden">
+      <SurahNavbar 
+        onSettingsToggle={handleSettingsToggle} 
+        onLeftSidebarToggle={handleLeftSidebarToggle}
+        currentSurahNum={surahnum}
+        onSettingsChange={handleSettingsChange}
+      />
+      <div className="flex flex-row w-full min-h-[93vh] bg-[#181818] overflow-hidden">
         {/* Left Sidebar: Surah List */}
         {showLeftSidebar && (
           <aside className="w-1/5 min-w-[220px] bg-[#181818] border-r border-gray-700 p-4 hidden md:block h-[93vh] sticky top-0 overflow-y-auto">

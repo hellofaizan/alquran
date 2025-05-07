@@ -1,4 +1,3 @@
-
 "use client"
 
 import React, { useState, useRef, useEffect } from 'react'
@@ -6,6 +5,7 @@ import { BsArrowLeftShort } from "react-icons/bs"
 import { BsArrowRightShort } from "react-icons/bs"
 import { FaPlay } from "react-icons/fa"
 import { FaPause } from "react-icons/fa"
+import { FaVolumeUp, FaVolumeMute } from "react-icons/fa"
 
 type props = {
     surah: any
@@ -15,6 +15,9 @@ const Player = ({ surah }: props) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [duration, setDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
+    const [volume, setVolume] = useState(1);
+    const [isMuted, setIsMuted] = useState(false);
+    const [previousVolume, setPreviousVolume] = useState(1);
 
     // references
     const audioPlayer = useRef<any>(null);   // reference our audio component
@@ -73,15 +76,46 @@ const Player = ({ surah }: props) => {
     }
 
     const forwardThirty = () => {
-        progressBar.current.value = Number(progressBar.current.value += 15);
+        const newTime = Number(progressBar.current.value) + 15;
+        progressBar.current.value = newTime;
         changeRange();
+    }
+
+    const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newVolume = parseFloat(e.target.value);
+        setVolume(newVolume);
+        if (audioPlayer.current) {
+            audioPlayer.current.volume = newVolume;
+        }
+        if (newVolume === 0) {
+            setIsMuted(true);
+        } else {
+            setIsMuted(false);
+        }
+    }
+
+    const toggleMute = () => {
+        if (isMuted) {
+            setVolume(previousVolume);
+            if (audioPlayer.current) {
+                audioPlayer.current.volume = previousVolume;
+            }
+            setIsMuted(false);
+        } else {
+            setPreviousVolume(volume);
+            setVolume(0);
+            if (audioPlayer.current) {
+                audioPlayer.current.volume = 0;
+            }
+            setIsMuted(true);
+        }
     }
 
     return (
         <div className="flex fixed bottom-0 w-full max-w-3xl justify-center items-center">
-            <div className="flex w-full items-center justify-between gap-4 bg-[#393939]/40 backdrop-blur-md px-4 py-3 text-white">
+            <div className="flex w-full items-center justify-between gap-3 bg-[#393939]/40 backdrop-blur-md px-4 py-3 text-white">
                 <audio ref={audioPlayer} src={`https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/${surah}.mp3`} preload="metadata"></audio>
-                <div className='flex gap-5'>
+                <div className='flex gap-4'>
                     <button onClick={backThirty}><BsArrowLeftShort /> 15</button>
                     <button onClick={togglePlayPause}>
                         {isPlaying ? <FaPause /> : <FaPlay />}
@@ -91,13 +125,29 @@ const Player = ({ surah }: props) => {
 
                 <div className='flex flex-1 w-full gap-2'>
                     {/* current time */}
-                    <div>{calculateTime(currentTime)}</div>
+                    <p className='text-sm'>{calculateTime(currentTime)}</p>
 
                     {/* progress bar */}
                     <input type="range" className="w-full" defaultValue="0" ref={progressBar} onChange={changeRange} />
 
                     {/* duration */}
-                    <div>{(duration && !isNaN(duration)) && calculateTime(duration)}</div>
+                    <p className='text-sm'>{(duration && !isNaN(duration)) && calculateTime(duration)}</p>
+                </div>
+
+                {/* Volume Controls */}
+                <div className="flex items-center gap-2 group">
+                    <button onClick={toggleMute} className="hover:text-gray-300">
+                        {isMuted ? <FaVolumeMute size={18} /> : <FaVolumeUp size={18} />}
+                    </button>
+                    <input
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.01"
+                        value={volume}
+                        onChange={handleVolumeChange}
+                        className="w-16 hidden group-hover:block h-1"
+                    />
                 </div>
             </div>
         </div>

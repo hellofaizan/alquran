@@ -1,8 +1,13 @@
 import { Separator } from "@/components/ui/separator";
 import axios from "axios";
 import { BookOpen, Copy, FileImage, Pause, Play, Loader } from "lucide-react";
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { FaEllipsisVertical } from "react-icons/fa6";
+
+// Global state for currently playing ayah
+let currentlyPlayingAyah: { surah: string; ayah: number } | null = null;
+const ayahAudioElements: { [key: string]: HTMLAudioElement } = {};
+const ayahPlayStates: { [key: string]: (isPlaying: boolean) => void } = {};
 
 interface Props {
   data: any;
@@ -57,6 +62,20 @@ const Aayahcard = ({
   const [aayahLoading, setAayahLoading] = React.useState(false);
   const [aayahPlaying, setAayahPlaying] = React.useState(false);
   const audioPlayer = useRef<any>(null);
+  const ayahKey = `${surahnum}_${data.number.inSurah}`;
+
+  // Effect to handle audio element cleanup
+  useEffect(() => {
+    if (audioPlayer.current) {
+      ayahAudioElements[ayahKey] = audioPlayer.current;
+      ayahPlayStates[ayahKey] = setAayahPlaying;
+    }
+
+    return () => {
+      delete ayahAudioElements[ayahKey];
+      delete ayahPlayStates[ayahKey];
+    };
+  }, [ayahKey]);
 
   const shareAayah = () => {
     const text = `${data.text.arab} -- ${data.text.translation}`;
@@ -67,17 +86,47 @@ const Aayahcard = ({
     navigator.share(shareData);
   };
 
+  const stopAllOtherAyahs = () => {
+    Object.entries(ayahAudioElements).forEach(([key, audio]) => {
+      if (key !== ayahKey) {
+        audio.pause();
+        audio.currentTime = 0;
+        // Update the UI state of other ayahs
+        if (ayahPlayStates[key]) {
+          ayahPlayStates[key](false);
+        }
+      }
+    });
+  };
+
   const togglePlayPause = () => {
     const prevValue = aayahPlaying;
-    setAayahPlaying(!prevValue);
-    if (!prevValue) {
-      audioPlayer?.current.play();
-    } else {
+    
+    // If this ayah is already playing, just pause it
+    if (prevValue) {
+      setAayahPlaying(false);
       audioPlayer?.current.pause();
+      currentlyPlayingAyah = null;
+      return;
     }
 
+    // Stop all other playing ayahs
+    stopAllOtherAyahs();
+
+    // Start playing this ayah
+    setAayahPlaying(true);
+    currentlyPlayingAyah = { surah: surahnum, ayah: data.number.inSurah };
+    
+    // Reset and play
+    if (audioPlayer?.current) {
+      audioPlayer.current.currentTime = 0;
+      audioPlayer.current.play();
+    }
+
+    // Add ended event listener
     audioPlayer?.current.addEventListener("ended", () => {
       setAayahPlaying(false);
+      currentlyPlayingAyah = null;
     });
   };
 
@@ -105,7 +154,7 @@ const Aayahcard = ({
         <button className="bg-center" onClick={togglePlayPause}>
           <audio
             ref={audioPlayer}
-            src={data.audio.primary}
+            src={data.audio}
             preload="metadata"
           ></audio>
           {aayahLoading ? (
@@ -119,7 +168,6 @@ const Aayahcard = ({
         <FileImage
           className="w-7 h-7 p-[6px] hover:bg-slate-300/10 rounded-lg"
           onClick={() => {
-            // show aayat image from https://cdn.islamic.network/quran/images/${surahnum}_${data.number.inSurah}.png
             window.open(
               `https://cdn.islamic.network/quran/images/${surahnum}_${data.number.inSurah}.png`
             );
