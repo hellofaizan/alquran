@@ -1,15 +1,11 @@
 import React from "react";
-import { Settings, Menu } from "lucide-react";
+import { Settings, Menu, MoreVertical } from "lucide-react";
 import { Toggle } from "@/components/ui/toggle";
 import { FiSearch } from "react-icons/fi";
 import Image from "next/image";
 import appLogo from "@/public/assets/applogo-white.png";
 import Link from "next/link";
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import SurahList from "./surahlist";
 import SettingPanel from "./settingspanel";
 
@@ -37,24 +33,6 @@ export default function SurahNavbar({
             </p>
           </Link>
         </div>
-        {/* Mobile Menu Toggle */}
-        <Sheet>
-          <SheetTrigger asChild>
-            <Toggle
-              variant="default"
-              size={"sm"}
-              aria-label="Toggle menu"
-              className="md:hidden"
-            >
-              <Menu size={18} />
-            </Toggle>
-          </SheetTrigger>
-          <SheetContent side="left" className="md:w-[280px] bg-[#181818] border-r border-gray-700 p-4 h-full overflow-y-auto">
-            <div className="h-full overflow-y-auto">
-              {currentSurahNum && <SurahList currentSurahNum={currentSurahNum} />}
-            </div>
-          </SheetContent>
-        </Sheet>
       </div>
 
       {/* Bismilah text */}
@@ -63,24 +41,52 @@ export default function SurahNavbar({
       </p>
 
       {/* Right: Settings */}
-      <div className="flex items-center gap-2 ml-4">
+      <div className="flex items-center gap-2">
         <Sheet>
           <SheetTrigger asChild>
             <Toggle
               variant="default"
-              size={"sm"}
+              size={"xs"}
               aria-label="Toggle settings"
               className="md:hidden"
             >
               <Settings size={18} />
             </Toggle>
           </SheetTrigger>
-          <SheetContent side="right" className="md:w-[280px] bg-[#181818] border-l border-gray-700 p-4 h-full overflow-y-auto">
+          <SheetContent
+            side="right"
+            className="md:w-[280px] bg-[#181818] border-l border-gray-700 p-4 h-full overflow-y-auto"
+          >
             <div className="h-full overflow-y-auto">
               <SettingPanel onSettingsChange={onSettingsChange} />
             </div>
           </SheetContent>
         </Sheet>
+
+        {/* Mobile Menu Toggle */}
+        <Sheet>
+          <SheetTrigger asChild>
+            <Toggle
+              variant="default"
+              size={"xs"}
+              aria-label="Toggle menu"
+              className="md:hidden"
+            >
+              <MoreVertical size={18} />
+            </Toggle>
+          </SheetTrigger>
+          <SheetContent
+            side="left"
+            className="md:w-[280px] bg-[#181818] border-r border-gray-700 p-4 h-full overflow-y-auto"
+          >
+            <div className="h-full overflow-y-auto">
+              {currentSurahNum && (
+                <SurahList currentSurahNum={currentSurahNum} />
+              )}
+            </div>
+          </SheetContent>
+        </Sheet>
+
         {/* Desktop Settings Toggle */}
         <Toggle
           variant="default"

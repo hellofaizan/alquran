@@ -68,7 +68,6 @@ const SheetContent = React.forwardRef<
       {...props}
     >
       <div className="flex flex-col">
-        <Image src={topImage} alt="background" className="left-0 w-full object-cover" role="progressbar" priority />
         <div className="px-5 py-2">
           {children}
         </div>
