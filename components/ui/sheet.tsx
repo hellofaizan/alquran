@@ -68,7 +68,7 @@ const SheetContent = React.forwardRef<
       {...props}
     >
       <div className="flex flex-col">
-        <div className="px-5 py-2">
+        <div className="px-0 py-2">
           {children}
         </div>
       </div>

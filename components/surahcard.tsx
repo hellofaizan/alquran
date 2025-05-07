@@ -18,7 +18,7 @@ const SurahCard = ({ data, isActive }: Props) => {
     >
       <div className="flex gap-2 items-center justify-center">
         <span
-          className={`flex mr-2 -z-10 w-10 group-hover:bg-[#22A5AD] group-hover:font-bold h-10 rounded-lg text-center items-center justify-center rotate-45 ${
+          className={`flex mr-2 z-10 w-10 group-hover:bg-[#22A5AD] group-hover:font-bold h-10 rounded-lg text-center items-center justify-center rotate-45 ${
             isActive ? "bg-[#22A5AD]" : "bg-gray-800/30"
           }`}
         >

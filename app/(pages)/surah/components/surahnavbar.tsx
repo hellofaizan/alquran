@@ -55,7 +55,7 @@ export default function SurahNavbar({
           </SheetTrigger>
           <SheetContent
             side="right"
-            className="md:w-[280px] bg-[#181818] border-l border-gray-700 p-4 h-full overflow-y-auto"
+            className="bg-[#181818] border-l border-gray-700 p-4 h-full overflow-y-auto"
           >
             <div className="h-full overflow-y-auto">
               <SettingPanel onSettingsChange={onSettingsChange} />
@@ -77,7 +77,7 @@ export default function SurahNavbar({
           </SheetTrigger>
           <SheetContent
             side="left"
-            className="md:w-[280px] bg-[#181818] border-r border-gray-700 p-4 h-full overflow-y-auto"
+            className="bg-[#181818] border-r border-gray-700 p-4 h-full overflow-y-auto"
           >
             <div className="h-full overflow-y-auto">
               {currentSurahNum && (

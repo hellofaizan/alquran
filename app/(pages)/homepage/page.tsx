@@ -111,9 +111,9 @@ const HomePage = () => {
             href={`/surah/${continueSurah.number}#${continueSurah.lastAayah}`}
             className="flex items-center gap-2 p-2 bg-slate-300/10 rounded-md mb-5"
           >
-            <p className="text-sm font-semibold">Continue Reading</p>
+            <p className="text-sm font-semibold">Continue</p>
             <p className="text-sm font-light">
-              {continueSurah.name} - {continueSurah.enName}
+              {continueSurah.enName} - {continueSurah.name}
             </p>
           </Link>
         )}
@@ -190,28 +190,25 @@ const HomePage = () => {
                 } else if (item.number.toString().includes(search)) {
                   return item;
                 } else if (
-                  item.name?.arabeng
-                    ?.toLowerCase()
-                    .includes(search.toLowerCase())
+                  item.name?.arabeng?.toLowerCase().includes(search.toLowerCase())
                 ) {
                   return item;
                 } else if (
-                  item.name?.translation
-                    ?.toLowerCase()
-                    .includes(search.toLowerCase())
+                  item.name?.translation?.toLowerCase().includes(search.toLowerCase())
                 ) {
                   return item;
                 }
               })
               .map((item: any, idx: number) => {
+                const isActive = continueSurah && String(item.number) === String(continueSurah.number);
                 if (idx === listSurah.length - 1) {
                   return (
                     <div ref={lastSurahElementRef} key={item.number}>
-                      <SurahCard data={item} />
+                      <SurahCard data={item} isActive={isActive} />
                     </div>
                   );
                 } else {
-                  return <SurahCard key={item.number} data={item} />;
+                  return <SurahCard key={item.number} data={item} isActive={isActive} />;
                 }
               })
           ) : (
