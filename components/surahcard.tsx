@@ -2,6 +2,9 @@
 
 import React from "react";
 import Link from "next/link";
+import madinah from "../public/assets/madinah.png";
+import makkah from "../public/assets/makkah.png";
+import Image from "next/image";
 
 interface Props {
   data: any;
@@ -16,17 +19,22 @@ const SurahCard = ({ data, isActive }: Props) => {
         isActive ? "border-[#22A5AD]" : "border-gray-500"
       } hover:border-[#22A5AD]`}
     >
-      <div className="flex gap-2 items-center justify-center">
+      <div className="flex gap-1 items-center justify-center">
         <span
-          className={`flex mr-2 z-10 w-10 group-hover:bg-[#22A5AD] group-hover:font-bold h-10 rounded-lg text-center items-center justify-center rotate-45 ${
-            isActive ? "bg-[#22A5AD]" : "bg-gray-800/30"
+          className={`flex mr-2 w-9 group-hover:bg-[#22A5AD]/80 group-hover:font-bold h-9 rounded-lg text-center items-center justify-center rotate-45 ${
+            isActive ? "bg-[#22A5AD]/80" : "bg-gray-800/30"
           }`}
         >
           <p className="-rotate-45 text-white font-light">{data.number}</p>
         </span>
         <div className="flex flex-col">
-          <p className="font-semibold text-lg">{data.name.arabeng}</p>
-          <p className="text-xs text-gray-400">{data.englishNameTranslation}</p>
+          <div className="flex gap-1 items-baseline">
+            <p className="font-semibold text-lg">{data.name.arabeng}</p>
+            <div title={data.revelation + " Surah"}>
+              {relevationImage(data.revelation)}
+            </div>
+          </div>
+          <p className="text-xs text-gray-400">{data.name.translation}</p>
         </div>
       </div>
       <div className="flex flex-col text-end">
@@ -39,6 +47,30 @@ const SurahCard = ({ data, isActive }: Props) => {
       </div>
     </Link>
   );
+};
+
+const relevationImage = (revelation: string) => {
+  if (revelation === "Meccan") {
+    return (
+      <Image
+        src={makkah}
+        alt="makkah"
+        className="w-[13px] h-[13px] opacity-80"
+        height={12}
+        width={12}
+      />
+    );
+  } else {
+    return (
+      <Image
+        src={madinah}
+        alt="madinah"
+        className="w-4 h-4 opacity-80"
+        height={14}
+        width={14}
+      />
+    );
+  }
 };
 
 export default SurahCard;

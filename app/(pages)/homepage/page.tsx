@@ -3,7 +3,7 @@
 import React from "react";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useToast } from "@/components/ui/use-toast";
-import { FaArrowUp91, FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6";
+import { FaArrowUp91 } from "react-icons/fa6";
 import { Skeleton } from "@/components/ui/skeleton";
 
 import {
@@ -15,6 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Search, X } from "lucide-react";
 import SurahCard from "@/components/surahcard";
 import { Input } from "@/components/ui/input";
@@ -118,38 +119,8 @@ const HomePage = () => {
           </Link>
         )}
 
-        <div className="flex justify-between items-center">
-          <h1 className="text-4xl font-semibold">List Surah</h1>
-          {/* Sort By dropdown */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <p className="flex items-center gap-1 cursor-pointer px-2 py-[4px] border rounded-md text-sm">
-                Sort By <FaArrowUp91 />
-              </p>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
-              <DropdownMenuLabel>Sort By</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuRadioGroup value={sort} onValueChange={setSort}>
-                <DropdownMenuRadioItem value="acc">
-                  Accending
-                </DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="dec">
-                  Decending
-                </DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="accaaya">
-                  Lowest Aayah
-                </DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="decaaya">
-                  Maximum Aayah
-                </DropdownMenuRadioItem>
-              </DropdownMenuRadioGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-
-        <div>
-          <div className="relative mt-4">
+        <div className="flex items-center justify-center gap-1 w-full">
+          <div className="relative flex-1">
             <Input
               type="text"
               id="Search"
@@ -179,6 +150,32 @@ const HomePage = () => {
               </span>
             )}
           </div>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <p className="flex items-center gap-1 cursor-pointer px-2 py-3 h-full border border-neutral-800 rounded-md text-sm">
+                <span className="text-sm hidden ">Sort By</span> <FaArrowUp91 size={18} />
+              </p>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              <DropdownMenuLabel>Sort By</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuRadioGroup value={sort} onValueChange={setSort}>
+                <DropdownMenuRadioItem value="acc">
+                  Accending
+                </DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="dec">
+                  Decending
+                </DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="accaaya">
+                  Lowest Aayah
+                </DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="decaaya">
+                  Maximum Aayah
+                </DropdownMenuRadioItem>
+              </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
         {/* // if large screen 3 grid else 1 grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 mt-5">
@@ -190,17 +187,23 @@ const HomePage = () => {
                 } else if (item.number.toString().includes(search)) {
                   return item;
                 } else if (
-                  item.name?.arabeng?.toLowerCase().includes(search.toLowerCase())
+                  item.name?.arabeng
+                    ?.toLowerCase()
+                    .includes(search.toLowerCase())
                 ) {
                   return item;
                 } else if (
-                  item.name?.translation?.toLowerCase().includes(search.toLowerCase())
+                  item.name?.translation
+                    ?.toLowerCase()
+                    .includes(search.toLowerCase())
                 ) {
                   return item;
                 }
               })
               .map((item: any, idx: number) => {
-                const isActive = continueSurah && String(item.number) === String(continueSurah.number);
+                const isActive =
+                  continueSurah &&
+                  String(item.number) === String(continueSurah.number);
                 if (idx === listSurah.length - 1) {
                   return (
                     <div ref={lastSurahElementRef} key={item.number}>
@@ -208,7 +211,13 @@ const HomePage = () => {
                     </div>
                   );
                 } else {
-                  return <SurahCard key={item.number} data={item} isActive={isActive} />;
+                  return (
+                    <SurahCard
+                      key={item.number}
+                      data={item}
+                      isActive={isActive}
+                    />
+                  );
                 }
               })
           ) : (
