@@ -156,7 +156,16 @@ const Aayahcard = ({
   // Get the font class based on settings
   const getArabicFontClass = () => {
     const fontType = translationSettings?.arabicFont || "uthmanic";
-    return fontType === "uthmanic" ? "font-uthmanic" : "font-arabic";
+    switch (fontType) {
+      case "uthmanic":
+        return "font-uthmanic";
+      case "arabic":
+        return "font-arabic";
+      case "indopak":
+        return "font-indopak";
+      default:
+        return "font-uthmanic";
+    }
   };
 
   return (
@@ -236,7 +245,7 @@ const Aayahcard = ({
           {/* arabic aayah */}
           <div className="text-end items-center">
             <p
-              className={`${getArabicFontClass()} py-3 leading-relaxed ${fontArabic}`}
+              className={`${getArabicFontClass()} py-1 md:py-2 leading-relaxed ${fontArabic}`}
             >
               {data.text.arab}
             </p>

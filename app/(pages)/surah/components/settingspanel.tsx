@@ -11,7 +11,7 @@ function getInitialSettings() {
         fontSizeArabic: parsed.fontSizeArabic ?? 3,
         fontSizeEnglish: parsed.fontSizeEnglish ?? 2,
         fontSizeUrdu: parsed.fontSizeUrdu ?? 2,
-        arabicFont: parsed.arabicFont ?? "uthmanic",
+        arabicFont: parsed.arabicFont ?? "indopak",
       };
     }
   }
@@ -21,7 +21,7 @@ function getInitialSettings() {
     fontSizeArabic: 3,
     fontSizeEnglish: 2,
     fontSizeUrdu: 2,
-    arabicFont: "uthmanic",
+    arabicFont: "indopak",
   };
 }
 
@@ -33,6 +33,7 @@ const TRANSLATION_OPTIONS = [
 const FONT_OPTIONS = [
   { label: "Uthmanic", value: "uthmanic" },
   { label: "Arabic", value: "arabic" },
+  { label: "Indopak", value: "indopak" },
 ];
 
 export default function SettingPanel({

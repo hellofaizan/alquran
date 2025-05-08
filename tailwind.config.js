@@ -34,7 +34,7 @@ module.exports = {
       fontFamily: {
         uthmanic: ["var(--font-uthmanic)"],
         arabic: ["var(--font-arabic)"],
-        persian: ["var(--font-persian)"],
+        indopak: ["var(--font-indopak)"],
       }
     },
   },

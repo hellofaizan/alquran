@@ -3,9 +3,6 @@ import type { Metadata } from 'next'
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
 import { Toaster } from "@/components/ui/sonner"
-import Nav from '@/components/navbar';
-import Image from 'next/image';
-import gradientImg from "@/public/topimg.png";
 import localfont from 'next/font/local'
 import { Inter } from 'next/font/google'
 
@@ -65,6 +62,11 @@ const arabic = localfont({
   display: 'swap',
   variable: "--font-arabic",
 })
+const indopak = localfont({
+  src: '../public/fonts/Indopak.ttf',
+  display: 'swap',
+  variable: "--font-indopak",
+})
 
 const cx = (...classes: any) => classes.filter(Boolean).join(' ');
 
@@ -77,7 +79,10 @@ export default function RootLayout({
     <html lang="en" className={cx(
       'text-white bg-[#111010]',
       GeistSans.variable,
-      GeistMono.variable
+      GeistMono.variable,
+      uthmanic.variable,
+      arabic.variable,
+      indopak.variable
     )}>
       <body className={`${inter.className} ${uthmanic.variable}`}>
         {/* <Nav /> */}
