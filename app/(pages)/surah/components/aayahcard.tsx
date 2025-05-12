@@ -8,9 +8,10 @@ import {
   Play,
   Loader,
   Share2,
+  ImagePlus,
 } from "lucide-react";
 import React, { useRef, useEffect } from "react";
-import { FaEllipsisVertical } from "react-icons/fa6";
+import { toast } from "sonner";
 
 // Global state for currently playing ayah
 let currentlyPlayingAyah: { surah: string; ayah: number } | null = null;
@@ -69,6 +70,7 @@ const Aayahcard = ({
 }: Props) => {
   const layoutRef = useRef(null);
   const [aayahLoading, setAayahLoading] = React.useState(false);
+  const [aayahImageLoading, setAayahImageLoading] = React.useState(false);
   const [aayahPlaying, setAayahPlaying] = React.useState(false);
   const audioPlayer = useRef<any>(null);
   const ayahKey = `${surahnum}_${data.number.inSurah}`;
@@ -86,13 +88,47 @@ const Aayahcard = ({
     };
   }, [ayahKey]);
 
-  const shareAayah = () => {
-    const text = `${data.text.arab} -- ${data.text.translation}`;
-    const shareData = {
-      title: "Quran Aayah",
-      text: text,
-    };
-    navigator.share(shareData);
+  // Share aayah with image
+  const shareAayah = async () => {
+    setAayahImageLoading(true);
+    try {
+      const payload = {
+        arabic: data.text.arab,
+        translation: data.text.translation,
+        surah: surahnum,
+        ayah: data.number.inSurah,
+        lang:
+          !translationSettings || translationSettings.showEnglish ? "en" : "ur",
+      };
+      const res = await fetch("/api/aayahImage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error("Failed to generate image");
+      const blob = await res.blob();
+      const file = new File(
+        [blob],
+        `ayah_${surahnum}_${data.number.inSurah}.png`,
+        { type: "image/png" }
+      );
+      const text = `${data.text.arab} -- ${data.text.translation} -- https://alquran.mohammadfaizan.in/surah/${surahnum}/${data.number.inSurah}`;
+      const shareData: any = {
+        title: "Quran Aayah",
+        text: text,
+        files: [file],
+      };
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share(shareData);
+      } else {
+        // fallback: just share text
+        await navigator.share({ title: "Quran Aayah", text });
+      }
+    } catch (err) {
+      toast.error("Failed to share aayah image");
+    } finally {
+      setAayahImageLoading(false);
+    }
   };
 
   const stopAllOtherAyahs = () => {
@@ -189,18 +225,14 @@ const Aayahcard = ({
             <Play className="w-7 h-7 p-[6px] hover:bg-slate-300/10 rounded-lg" />
           )}
         </button>
-        <FileImage
-          className="w-7 h-7 p-[6px] hover:bg-slate-300/10 rounded-lg cursor-pointer"
-          onClick={() => {
-            window.open(
-              `https://cdn.islamic.network/quran/images/${surahnum}_${data.number.inSurah}.png`
-            );
-          }}
-        />
-        <Share2
-          className="w-7 h-7 p-[6px] hover:bg-slate-300/10 rounded-lg cursor-pointer"
-          onClick={shareAayah}
-        />
+        {aayahImageLoading ? (
+          <Loader className="w-7 h-7 p-[6px] animate-spin text-slate-400" />
+        ) : (
+          <Share2
+            className="w-7 h-7 p-[6px] hover:bg-slate-300/10 rounded-lg cursor-pointer"
+            onClick={shareAayah}
+          />
+        )}
       </div>
 
       <div className="flex flex-col w-full py-1 md:py-2 md:pt-4">
@@ -227,18 +259,14 @@ const Aayahcard = ({
               <Play className="w-7 h-7 p-[6px] hover:bg-slate-300/10 rounded-lg" />
             )}
           </button>
-          <FileImage
-            className="w-7 h-7 p-[6px] hover:bg-slate-300/10 rounded-lg cursor-pointer"
-            onClick={() => {
-              window.open(
-                `https://cdn.islamic.network/quran/images/${surahnum}_${data.number.inSurah}.png`
-              );
-            }}
-          />
-          <Share2
-            className="w-7 h-7 p-[6px] hover:bg-slate-300/10 rounded-lg cursor-pointer"
-            onClick={shareAayah}
-          />
+          {aayahImageLoading ? (
+            <Loader className="w-7 h-7 p-[6px] animate-spin text-slate-400" />
+          ) : (
+            <Share2
+              className="w-7 h-7 p-[6px] hover:bg-slate-300/10 rounded-lg cursor-pointer"
+              onClick={shareAayah}
+            />
+          )}
         </div>
 
         <div className="flex flex-col gap-1" ref={layoutRef}>
