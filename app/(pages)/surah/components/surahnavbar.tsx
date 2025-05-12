@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Settings, Menu, MoreVertical } from "lucide-react";
 import { Toggle } from "@/components/ui/toggle";
 import { FiSearch } from "react-icons/fi";
@@ -8,6 +8,7 @@ import Link from "next/link";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import SurahList from "./surahlist";
 import SettingPanel from "./settingspanel";
+import StreakButton from "@/components/streak";
 
 export default function SurahNavbar({
   onSettingsToggle,
@@ -42,6 +43,8 @@ export default function SurahNavbar({
 
       {/* Right: Settings */}
       <div className="flex items-center gap-2">
+        {/* Streak Icon */}
+        <StreakButton />
         <Sheet>
           <SheetTrigger asChild>
             <Toggle

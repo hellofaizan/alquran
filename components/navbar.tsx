@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState, useEffect } from "react";
 import { Heart, Menu } from "lucide-react";
@@ -7,66 +7,68 @@ import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import appLogo from "@/public/assets/applogo-white.png";
 import { cn } from "@/lib/utils";
+import StreakButton from "@/components/streak";
 
 const Nav = () => {
-    const [scrolling, setScrolling] = useState(false);
-    const [windowWidth, setWindowWidth] = useState(0); // Set initial width to 0
+  const [scrolling, setScrolling] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(0); // Set initial width to 0
 
-    useEffect(() => {
-        // Check if window is defined before accessing window.innerWidth
-        if (typeof window !== 'undefined') {
-            setWindowWidth(window.innerWidth);
-        }
+  useEffect(() => {
+    // Check if window is defined before accessing window.innerWidth
+    if (typeof window !== "undefined") {
+      setWindowWidth(window.innerWidth);
+    }
 
-        const handleScroll = () => {
-            const isScrolled = window.scrollY > 0;
-            setScrolling(isScrolled);
-        };
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 0;
+      setScrolling(isScrolled);
+    };
 
-        const handleResize = () => {
-            setWindowWidth(window.innerWidth);
-        };
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
 
-        // Check if window is defined before adding event listeners
-        if (typeof window !== 'undefined') {
-            window.addEventListener("scroll", handleScroll);
-            window.addEventListener("resize", handleResize);
-        }
+    // Check if window is defined before adding event listeners
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", handleScroll);
+      window.addEventListener("resize", handleResize);
+    }
 
-        return () => {
-            // Check if window is defined before removing event listeners
-            if (typeof window !== 'undefined') {
-                window.removeEventListener("scroll", handleScroll);
-                window.removeEventListener("resize", handleResize);
-            }
-        };
-    }, []);
+    return () => {
+      // Check if window is defined before removing event listeners
+      if (typeof window !== "undefined") {
+        window.removeEventListener("scroll", handleScroll);
+        window.removeEventListener("resize", handleResize);
+      }
+    };
+  }, []);
 
-    return (
-        <div className={cn(
-            "sticky top-0 w-full justify-center px-2 z-10",
-            scrolling
-                ? "backdrop-blur-lg"
-                : "backdrop-blur-0"
-        )}>
-            <div className="flex justify-between flex-row py-2">
-                {/* Menu and Logo */}
-                <div className="flex gap-2 items-center">
-                    <Link href={"/"} className="flex items-center justify-center gap-2">
-                        <Image src={appLogo} className="w-10 h-10" alt="App Logo" />
-                        <p className="font-medium text-2xl font-uthmanic">Al Quran</p>
-                    </Link>
-                </div>
+  return (
+    <div
+      className={cn(
+        "sticky top-0 w-full justify-center px-2 z-10",
+        scrolling ? "backdrop-blur-lg" : "backdrop-blur-0"
+      )}
+    >
+      <div className="flex justify-between flex-row py-2">
+        {/* Menu and Logo */}
+        <div className="flex gap-2 items-center">
+          <Link href={"/"} className="flex items-center justify-center gap-2">
+            <Image src={appLogo} className="w-10 h-10" alt="App Logo" />
+            <p className="font-medium text-2xl font-uthmanic">Al Quran</p>
+          </Link>
+        </div>
 
-                {/* Icons End */}
-                <div className="flex items-center gap-1">
-                    <Link href="https://github.com/hellofaizan/alquran" target="_blank">
-                        <GitHubLogoIcon className="w-9 h-9 p-[7px] hover:bg-slate-300/10 rounded-lg"/>
-                    </Link>
-                    <Link href="https://www.buymeacoffee.com/hellofaizan" target="_blank">
-                        <Heart className="w-9 h-9 p-[6px] hover:bg-slate-300/10 rounded-lg" />
-                    </Link>
-                    {/* <Sheet>
+        {/* Icons End */}
+        <div className="flex items-center gap-1">
+          <StreakButton />
+          <Link href="https://github.com/hellofaizan/alquran" target="_blank">
+            <GitHubLogoIcon className="w-9 h-9 p-[7px] hover:bg-slate-300/10 rounded-lg" />
+          </Link>
+          <Link href="https://www.buymeacoffee.com/hellofaizan" target="_blank">
+            <Heart className="w-9 h-9 p-[6px] hover:bg-slate-300/10 rounded-lg" />
+          </Link>
+          {/* <Sheet>
                         <SheetTrigger>
                             <Menu className="w-9 h-9 p-[5px] hover:bg-slate-300/10 rounded-lg" />
                         </SheetTrigger>
@@ -77,10 +79,10 @@ const Nav = () => {
                             </SheetFooter>
                         </SheetContent>
                     </Sheet> */}
-                </div>
-            </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default Nav;

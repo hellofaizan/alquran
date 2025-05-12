@@ -31,6 +31,11 @@ function getInitialTranslationSettings() {
   };
 }
 
+// --- Streak/session timer logic ---
+function getTodayDateStr() {
+  return new Date().toISOString().slice(0, 10);
+}
+
 const SurahPage = (props: { params: Promise<{ surahnum: string }> }) => {
   const params = use(props.params);
   const surahnum = params.surahnum;
@@ -117,6 +122,83 @@ const SurahPage = (props: { params: Promise<{ surahnum: string }> }) => {
   // Handler for translation settings change
   const handleSettingsChange = (settings: any) =>
     setTranslationSettings(settings);
+
+  // --- Streak/session timer logic ---
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+    let lastSave = Date.now();
+    const today = getTodayDateStr();
+    // Get today's seconds (global, not per-surah)
+    let todaySeconds = Number(localStorage.getItem("alquran_streak_today_seconds")) || 0;
+    // Get checked days array
+    let checkedDays: { date: string; seconds: number }[] = [];
+    try {
+      checkedDays = JSON.parse(localStorage.getItem("alquran_streak_checked_days") || "[]");
+    } catch {}
+    // Remove duplicate for today if exists
+    checkedDays = checkedDays.filter((d) => d.date !== today);
+    // Get last checked date (legacy)
+    let lastChecked = localStorage.getItem("alquran_streak_last_checked") || "";
+
+    // If new day, reset today's seconds
+    if (lastChecked !== today) {
+      todaySeconds = 0;
+      localStorage.setItem("alquran_streak_today_seconds", "0");
+    }
+
+    function saveSession() {
+      localStorage.setItem("alquran_streak_today_seconds", String(todaySeconds));
+      // Always update checkedDays with today's latest seconds if present
+      const idx = checkedDays.findIndex((d) => d.date === today);
+      if (idx !== -1) {
+        checkedDays[idx].seconds = todaySeconds;
+      }
+      localStorage.setItem("alquran_streak_checked_days", JSON.stringify(checkedDays));
+    }
+
+    function checkGoal(minMinutes: number) {
+      if (todaySeconds >= minMinutes * 60) {
+        // Add today to checkedDays if not already present
+        if (!checkedDays.some((d) => d.date === today)) {
+          checkedDays.push({ date: today, seconds: todaySeconds });
+          localStorage.setItem("alquran_streak_checked_days", JSON.stringify(checkedDays));
+        }
+        // Legacy: set last_checked
+        if (lastChecked !== today) {
+          localStorage.setItem("alquran_streak_last_checked", today);
+        }
+      }
+    }
+
+    let isTabActive = true;
+    function handleVisibility() {
+      isTabActive = document.visibilityState === "visible";
+    }
+    document.addEventListener("visibilitychange", handleVisibility);
+
+    interval = setInterval(() => {
+      if (isTabActive) {
+        todaySeconds++;
+        // Always get the latest minMinutes
+        let minMinutes = Number(localStorage.getItem("alquran_streak_min_minutes")) || 3;
+        // Save every 5 seconds
+        if (Date.now() - lastSave > 5000) {
+          saveSession();
+          lastSave = Date.now();
+        }
+        checkGoal(minMinutes);
+      }
+    }, 1000);
+
+    window.addEventListener("beforeunload", saveSession);
+
+    return () => {
+      if (interval) clearInterval(interval);
+      document.removeEventListener("visibilitychange", handleVisibility);
+      window.removeEventListener("beforeunload", saveSession);
+      saveSession();
+    };
+  }, []);
 
   return (
     <>
