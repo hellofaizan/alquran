@@ -33,7 +33,9 @@ function getInitialTranslationSettings() {
 
 // --- Streak/session timer logic ---
 function getTodayDateStr() {
-  return new Date().toISOString().slice(0, 10);
+  const now = new Date();
+  // Format date in YYYY-MM-DD using local timezone
+  return now.toLocaleDateString('en-CA'); // This will use local timezone and format as YYYY-MM-DD
 }
 
 const SurahPage = (props: { params: Promise<{ surahnum: string }> }) => {
@@ -147,6 +149,13 @@ const SurahPage = (props: { params: Promise<{ surahnum: string }> }) => {
     }
 
     function saveSession() {
+      const currentDate = getTodayDateStr();
+      // If date changed, reset the counter
+      if (currentDate !== today) {
+        todaySeconds = 0;
+        localStorage.setItem("alquran_streak_today_seconds", "0");
+        return;
+      }
       localStorage.setItem("alquran_streak_today_seconds", String(todaySeconds));
       // Always update checkedDays with today's latest seconds if present
       const idx = checkedDays.findIndex((d) => d.date === today);
@@ -157,7 +166,9 @@ const SurahPage = (props: { params: Promise<{ surahnum: string }> }) => {
     }
 
     function checkGoal(minMinutes: number) {
-      if (todaySeconds >= minMinutes * 60) {
+      const currentDate = getTodayDateStr();
+      // Only check goal for current date
+      if (currentDate === today && todaySeconds >= minMinutes * 60) {
         // Add today to checkedDays if not already present
         if (!checkedDays.some((d) => d.date === today)) {
           checkedDays.push({ date: today, seconds: todaySeconds });
