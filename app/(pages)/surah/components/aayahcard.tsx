@@ -282,7 +282,7 @@ const Aayahcard = ({
           {/* Urdu Translation */}
           {translationSettings && translationSettings.showUrdu && (
             <div className="text-end items-center">
-              <p className={`font-uthmanic text-gray-200 ${fontUrdu}`}>
+              <p className={`font-font_urdu text-gray-200 ${fontUrdu}`}>
                 {data.text.urdu} {"۔"}
               </p>
             </div>

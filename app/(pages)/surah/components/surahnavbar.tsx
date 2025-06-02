@@ -37,7 +37,7 @@ export default function SurahNavbar({
       </div>
 
       {/* Bismilah text */}
-      <p className="text-2xl md:text-3xl font-arabic h-full">
+      <p className="text-2xl md:text-3xl font-bismillah h-full">
         بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
       </p>
 

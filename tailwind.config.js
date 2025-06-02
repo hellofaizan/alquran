@@ -35,6 +35,8 @@ module.exports = {
         uthmanic: ["var(--font-uthmanic)"],
         arabic: ["var(--font-arabic)"],
         indopak: ["var(--font-indopak)"],
+        bismillah: ["var(--font-bismillah)"],
+        font_urdu: ["var(--font-font_urdu)"],
       }
     },
   },

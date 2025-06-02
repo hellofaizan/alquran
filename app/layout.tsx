@@ -67,6 +67,16 @@ const indopak = localfont({
   display: 'swap',
   variable: "--font-indopak",
 })
+const bismillah = localfont({
+  src: '../public/fonts/Bismillah.ttf',
+  display: 'swap',
+  variable: "--font-bismillah",
+})
+const font_urdu = localfont({
+  src: '../public/fonts/font_urdu.ttf',
+  display: 'swap',
+  variable: "--font-font_urdu",
+})
 
 const cx = (...classes: any) => classes.filter(Boolean).join(' ');
 
@@ -82,7 +92,9 @@ export default function RootLayout({
       GeistMono.variable,
       uthmanic.variable,
       arabic.variable,
-      indopak.variable
+      indopak.variable,
+      bismillah.variable,
+      font_urdu.variable
     )}>
       <body className={`${inter.className} ${uthmanic.variable}`}>
         {/* <Nav /> */}
